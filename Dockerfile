@@ -3,4 +3,4 @@ LABEL maintainer="vouu <sale@tinyactive.net>" version="8.2.0"
 RUN mkdir -p /var/agent
 ADD agent.jar /var/agent/atlassian-agent.jar
 ENV JAVA_OPTS="-javaagent:/var/agent/atlassian-agent.jar ${JAVA_OPTS}"
-EXPOSE 8080
+EXPOSE 8090

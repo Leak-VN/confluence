@@ -9,7 +9,7 @@ services:
     depends_on:
       - confluence_db
     ports:
-      - "9090:8080"
+      - "8090:8090"
     volumes:
       - confluence_data:/var/jira
       - confluence_core:/opt/jira
