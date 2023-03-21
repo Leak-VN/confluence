@@ -1,0 +1,46 @@
+version: '3.4'
+services:
+  jira:
+    build:
+      dockerfile: Dockerfile
+    container_name: confluence-tiny
+    environment:
+      - TZ='Asia/Ho_Chi_Minh'
+    depends_on:
+      - confluence_db
+    ports:
+      - "9090:8080"
+    volumes:
+      - confluence_data:/var/jira
+      - confluence_core:/opt/jira
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - network-bridge
+  confluence_db:
+    image: postgres:14
+    container_name: postgresql-confluence-tiny
+    env_file:
+      - database-confluence.env
+    # ports:
+    #   - "5432:5432"
+    volumes:
+      - database_confluence_servicedesk:/var/lib/postgresql/data/
+    restart: always
+    networks:
+      - network-bridge
+
+networks:
+  network-bridge:
+    driver: bridge
+volumes:
+  confluence_data:
+    external: false
+  database_confluence_servicedesk:
+  confluence_core:
+  
